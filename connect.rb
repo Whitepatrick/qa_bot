@@ -16,5 +16,4 @@
     - Destroy connection
     - Check connection
     - Load users/chat rooms
-    - Kill / Restart commands
 =end
