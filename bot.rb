@@ -19,3 +19,14 @@
       - Save state
       - Restart script for Restart
 =end
+
+require 'xmpp4r'
+require_relative 'connect'
+require_relative 'alert'
+require_relative 'exec'
+require_relative 'listen'
+require_relative 'query'
+require_relative 'speak'
+
+test_method("This should appear")
+

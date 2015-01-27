@@ -18,3 +18,6 @@
     - Error handle input
     - Export input
 =end
+
+require 'xmpp4r'
+require_relative 'connect'

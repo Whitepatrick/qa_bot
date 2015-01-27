@@ -14,3 +14,6 @@
     - Send to speak.rb: say a thing
     - Send to alert.rb: inform user of a thing
 =end
+
+require 'xmpp4r'
+require_relative 'connect'

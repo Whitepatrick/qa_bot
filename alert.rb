@@ -16,3 +16,5 @@
     - Tie in to ELK / statsd / Graphite
 =end
 
+require 'xmpp4r'
+require_relative 'connect'

@@ -16,3 +16,6 @@
     - Execute
     - Return status or exit
 =end
+
+require 'xmpp4r'
+require_relative 'connect'

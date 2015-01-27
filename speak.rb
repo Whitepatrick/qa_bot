@@ -24,3 +24,6 @@
     - All lower
     - Mix
 =end
+
+require 'xmpp4r'
+require_relative 'connect'
