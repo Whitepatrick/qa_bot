@@ -4,7 +4,6 @@
 # and SB jabber server
 # By: Patrick White
 
-
 =begin
   This module will serve as a connection proxy
   for all the bot's functions. Should try attaching
@@ -18,7 +17,7 @@
     - Load users/chat rooms
 =end
 
-# require 'xmpp4r'
+require 'xmpp4r'
 
 # def test_method(var_string)
 #  puts var_string
@@ -30,6 +29,7 @@
 # auth
 $:.unshift '../../../../../lib'
 require 'xmpp4r/client'
+require 'xmpp4r/sasl'
 include Jabber
 Jabber::debug = true
 class BasicClient
@@ -80,7 +80,7 @@ class BasicClient
 ##
 # auth
   def do_auth
-    @cl.auth(@password, false)
+    @cl.auth(@password)
   end
 end
 BasicClient.new
