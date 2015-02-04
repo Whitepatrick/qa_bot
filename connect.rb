@@ -17,70 +17,27 @@
     - Load users/chat rooms
 =end
 
-require 'xmpp4r'
+require 'xmpp4r/robot'
 
-# def test_method(var_string)
-#  puts var_string
-#end
+robot = Jabber::Robot.new('rundeck@chat.smartbrief.com', 'temp123!',
+                          :auto_accept_subscription => true,)
 
-# Basic console client that does nothing, but easy to modify to test things.
-# to test, start, then type :
-# connect login@server/resource password
-# auth
-$:.unshift '../../../../../lib'
-require 'xmpp4r/client'
-require 'xmpp4r/sasl'
-include Jabber
-Jabber::debug = true
-class BasicClient
-  def initialize
-    puts "Welcome to this Basic Console Jabber Client!"
-    quit = false
-# main loop
-    while not quit do
-      print "> "
-      $>.flush
-      line = gets
-      quit = true if line.nil?
-      if not quit
-        command, args = line.split(' ', 2)
-        args = args.to_s.chomp
-# main case
-        case command
-          when 'exit'
-            quit = true
-          when 'connect'
-            do_connect(args)
-          when 'help'
-            do_help
-          when 'auth'
-            do_auth
-          else
-            puts "Command \"#{command}\" unknown"
-        end
-      end
-    end
-    puts "Goodbye!"
-  end
-  def do_help
-    puts <<-EOF
-# exit - exits
-# connect user@server/resource password - connects
-# auth - sends authentification
-    EOF
-  end
-##
-# connect <jid> <password>
-  def do_connect(args)
-    @jid, @password = args.split(' ', 2)
-    @jid = JID.new(@jid)
-    @cl = Client.new(@jid)
-    @cl.connect
-  end
-##
-# auth
-  def do_auth
-    @cl.auth(@password)
+p robot.start.roster
+
+robot.notify_presence{ |from, status| put "#{from}" 'is' "#{status}"}
+
+robot.notify_message do |from, body|
+  if from == "pwhite@chat.smartbrief.com"
+    puts "#{from} the creator says: #{body}"
+  else
+    puts "#{from}: from #{body}"
   end
 end
-BasicClient.new
+
+robot.message('pwhite@chat.smartbrief.com', "you're a turkey")
+
+rd, wr = IO.pipe
+Signal.trap('INT'){ wr.puts }
+rd.gets
+
+robot.stop
