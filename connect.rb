@@ -17,13 +17,20 @@
     - Load users/chat rooms
 =end
 
+=begin
+use classes and class inheritance to work around robot not working for methods.
+=end
+
+
+
+
 require 'xmpp4r/robot'
 require_relative 'vars'
 
 robot = Jabber::Robot.new(USERNAME, PASSWORD,
                           :auto_accept_subscription => true,)
 p robot.start.roster
-robot.notify_presence{ |from, status| put "#{from}" 'is' "#{status}"}
+robot.notify_presence{ |from, status| put "#{from}" 'is' "#{status}" }
 
 
 robot.notify_message do |from, body|
@@ -48,8 +55,7 @@ def run(command, from)
 end
 
 def send_message(command, from)
-  puts command
-  puts from
+
 end
 
 rd, wr = IO.pipe
