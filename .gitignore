@@ -20,7 +20,7 @@ build/
 /doc/
 /rdoc/
 /.idea/
-
+vars.rb
 ## Environment normalisation:
 /.bundle/
 /lib/bundler/man/

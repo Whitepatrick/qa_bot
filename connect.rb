@@ -19,22 +19,37 @@
 
 require 'xmpp4r/robot'
 
-robot = Jabber::Robot.new('rundeck@chat.smartbrief.com', 'temp123!',
+robot = Jabber::Robot.new('username', 'password',
                           :auto_accept_subscription => true,)
-
 p robot.start.roster
-
 robot.notify_presence{ |from, status| put "#{from}" 'is' "#{status}"}
 
+
 robot.notify_message do |from, body|
-  if from == "pwhite@chat.smartbrief.com"
-    puts "#{from} the creator says: #{body}"
-  else
-    puts "#{from}: from #{body}"
+  command = Array.new(body.split(' '))
+  if command[0] == "dispatch"
+    dispatch(command, from)
+  elsif command[0] == "build"
+    run(command, from)
   end
 end
 
-robot.message('pwhite@chat.smartbrief.com', "you're a turkey")
+def dispatch(command, from)
+  send_message(from, command)
+  puts command
+  puts from
+end
+
+def run(command, from)
+  send_message(from, command)
+  puts command
+  puts from
+end
+
+def send_message(command, from)
+  puts command
+  puts from
+end
 
 rd, wr = IO.pipe
 Signal.trap('INT'){ wr.puts }
