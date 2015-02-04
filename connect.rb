@@ -18,8 +18,9 @@
 =end
 
 require 'xmpp4r/robot'
+require_relative 'vars'
 
-robot = Jabber::Robot.new('username', 'password',
+robot = Jabber::Robot.new(USERNAME, PASSWORD,
                           :auto_accept_subscription => true,)
 p robot.start.roster
 robot.notify_presence{ |from, status| put "#{from}" 'is' "#{status}"}
