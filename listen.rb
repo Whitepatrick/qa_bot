@@ -15,5 +15,12 @@
     - Send to alert.rb: inform user of a thing
 =end
 
-require 'xmpp4r'
-require_relative 'connect'
+require 'xmpp4r/robot'
+require_relative 'client'
+
+class Listen
+  def sanatize(message)
+    puts message
+  end
+end
+

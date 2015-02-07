@@ -17,4 +17,4 @@
 =end
 
 require 'xmpp4r'
-require_relative 'connect'
+require_relative 'client'
