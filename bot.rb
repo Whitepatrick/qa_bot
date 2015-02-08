@@ -19,7 +19,13 @@
       - Save state
       - Restart script for Restart
 =end
+
+require 'bundler/setup'
+Bundler.require(:default)
+
+require 'xmpp4r'
 require 'xmpp4r/robot'
+
 require_relative 'client'
 
 alive = Robot.new
