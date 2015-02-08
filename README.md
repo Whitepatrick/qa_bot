@@ -8,6 +8,14 @@ In it's current state it's missing a secrets file
 I've called vars.rb. This must be present and contain
 your login info for this bot to work.
 
+vars.rb should look like this
+
+```
+USERNAME = 'username'
+PASSWORD = 'password'
+```
+drop vars.rb right along the main bot classes.
+
 TO-DO
 -----
 
