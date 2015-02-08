@@ -23,10 +23,10 @@
 require 'bundler/setup'
 Bundler.require(:default)
 
+require 'rspec'
 require 'xmpp4r'
 require 'xmpp4r/robot'
-
 require_relative 'client'
 
-alive = Robot.new
+alive = Client.new
 alive.connect_and_listen

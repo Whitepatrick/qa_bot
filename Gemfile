@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'xmpp4r-robot', '0.3.0'
+gem 'rspec'
 gem 'xmpp4r'
+gem 'xmpp4r-robot', '0.3.0'

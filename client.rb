@@ -21,39 +21,44 @@
 use classes and class inheritance to work around robot not working for methods.
 =end
 
+require 'rspec'
+require 'xmpp4r'
 require 'xmpp4r/robot'
 require_relative 'vars'
 require_relative 'listen'
 
-class Robot
+class Client
 
   # Method to connect bot to server and begin
   # listening for messages. Later functionality
   # will include joing MUC.
   def connect_and_listen
     # calls xmpp4r-robot instance w/ connection
-    conn = Jabber::Robot.new(USERNAME, PASSWORD,
+    robot = Jabber::Robot.new(USERNAME, PASSWORD,
                              :auto_accept_subscription => true,)
     # starts bot
-    conn.start.roster
+    robot.start#.roster
 
-    # takes incoming messages, stores them lowercase
-    # and sends to transform method for further
-    # assignments
-    conn.notify_message do | from, body |
-      from.downcase!
-      body.downcase!
-      transform(from, body)
-    end
-
-    # Opens a stream to listen to
-    # quits when interrupt is received
     rd, wr = IO.pipe
     Signal.trap('INT'){ wr.puts }
     rd.gets
 
+    robot.notify_message do | from, body |
+      # transform(from, body)
+      puts "#{from}" ' says:: ' "#{body}"
+    end
+
+
+    # takes incoming messages, stores them lowercase
+    # and sends to transform method for further
+    # assignments
+
+    # Opens a stream to listen to
+    # quits when interrupt is received
+
     # stops bot
-    conn.stop
+    robot.stop
+    exit
   end
 
   # order of array SHOULD be:
@@ -77,22 +82,23 @@ class Robot
   # the next step here.
   def transform(from, body)
 
+    # user = from.downcase!
+    # msg = body.downcase!
+
     message = Hash.new{|h,k| h[k] = 0 }
     message[:from] = from
     message[:cmd] = body
 
     cmd = Hash.new{|h,k| h[k] = 0 }
-    cmd_split = body.split
+    cmd_split = body.split(' ')
     cmd[:verb] = cmd_split[0]
     cmd[:target] = cmd_split[1]
     cmd[:repo] = cmd_split[2]
     cmd[:branch] = cmd_split[3]
 
+    puts "#{from}" ' says: ' "#{cmd}"
   end
 end
 
-
-alive = Robot.new
-alive.connect_and_listen
-#pass = Listen.new
-#pass.print_var(cmd)
+robot = Client.new
+robot.connect_and_listen

@@ -15,6 +15,8 @@
     - Send to alert.rb: inform user of a thing
 =end
 
+require 'rspec'
+require 'xmpp4r'
 require 'xmpp4r/robot'
 require_relative 'client'
 
